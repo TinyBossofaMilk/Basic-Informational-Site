@@ -1,20 +1,70 @@
-import { URL } from 'node:url';
+// import { URL } from 'node:url';
+// const axios = require('axios');
 
 const http = require ('http');
-const axios = require('axios');
+const fs = require('fs');
 
-const port = proces.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 const server = http.createServer((req, res) => {
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'text/html')
-    res.end('<h1>Hello, World!</h1>')
+    res.writeHead(200,{'Content-Type':'text/html'});
+    // res.statusCode = 200;
+    console.log("req url = " + req.url);
+    console.log("res method " + res.method);
+
+    if(req.url === "/"){
+        fs.readFile('index.html',function(err,data){
+            if (err) 
+            {throw err;}
+            
+            // res.writeHead(200,{'Content-Type':'text/html'});
+            res.write(data);
+            res.end();
+        });
+    }
+    if(req.url === "/about.html"){
+        fs.readFile('about.html',  (err, data) => {
+        if(err)
+        {throw err;}
+
+        res.write(data);
+        res.end();
+        });
+    }
+    if(req.url === "/contact-me.html"){
+        fs.readFile("contact-me.html", (err, data) => {
+            if(err)
+                throw err;
+
+            res.write(data);
+            res.end();
+        })
+    }
+    else{
+        fs.readFile("404.html", (err, data) => {
+            if(err)
+                throw err;
+
+            res.write(data);
+            res.end();
+        })
+    }
+
+
 })
+
+// if(req.url==='/'){
+//     fs.readFile('index.html',function(err,data){
+//         if (err) throw err;
+//         res.writeHead(200,{'Content-Type':'text/html'});
+//         res.write(data);
+//         return res.end;
+//     });
+// }
   
 server.listen(port, () => {
     console.log(`Server running at port ${port}`)
 })
-
 
 // localhost:8080 should take users to index.html
 // localhost:8080/about should take users to about.html
