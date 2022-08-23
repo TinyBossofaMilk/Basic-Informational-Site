@@ -52,21 +52,7 @@ const server = http.createServer((req, res) => {
 
 
 })
-
-// if(req.url==='/'){
-//     fs.readFile('index.html',function(err,data){
-//         if (err) throw err;
-//         res.writeHead(200,{'Content-Type':'text/html'});
-//         res.write(data);
-//         return res.end;
-//     });
-// }
   
 server.listen(port, () => {
     console.log(`Server running at port ${port}`)
 })
-
-// localhost:8080 should take users to index.html
-// localhost:8080/about should take users to about.html
-// localhost:8080/contact-me should take users to contact-me.html
-// 404.html should display any time the user tries to go to a page not listed above.
